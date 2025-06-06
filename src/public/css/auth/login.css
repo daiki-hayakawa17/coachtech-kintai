@@ -1,0 +1,55 @@
+.login__form {
+    max-width: 680px;
+    margin: 80px auto 60px;
+}
+
+.form__title {
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 100%;
+    margin-bottom: 45px;
+    text-align: center;
+}
+
+.form__group {
+    margin-bottom: 33px;
+}
+
+.form__label {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 100%;
+    text-align: left;
+}
+
+.form__input input {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #000;
+    border-radius: 4px;
+}
+
+.form__button {
+    margin-top: 60px;
+}
+
+.form__button--submit {
+    background-color: #000;
+    width: 100%;
+    height: 60px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+.register__link {
+    display: block;
+    height: 49px;
+    margin: 17px auto 60px;
+    text-decoration: none;
+    color: #0073cc;
+    text-align: center;
+}
