@@ -15,31 +15,30 @@
         </a>
         <nav class="header__nav">
             <ul class="header__nav--list">
-                <li class="header__nav--item">
-                    <a class="header__nav--link">勤怠</a>
-                </li>
-                <li class="header__nav--item">
-                    <a class="header__nav--link">勤怠一覧</a>
-                </li>
-                <li class="header__nav--item">
-                    <a class="header__nav--link">申請</a>
-                </li>
-                @if (Auth::check())
+                @if ($statusLabel !== '退勤済')
                     <li class="header__nav--item">
-                        <form action="/logout" method="post">
-                            @csrf
-                            <button class="header__nav--button" type="submit">ログアウト</button>
-                        </form>
+                        <a class="header__nav--link" href="/attendance">勤怠</a>
+                    </li>
+                    <li class="header__nav--item">
+                        <a class="header__nav--link">勤怠一覧</a>
+                    </li>
+                    <li class="header__nav--item">
+                        <a class="header__nav--link">申請</a>
                     </li>
                 @else
                     <li class="header__nav--item">
-                        <form action="/login" method="get">
-                            <button class="header__nav--button" type="submit">
-                                ログイン
-                            </button>
-                        </form>
+                        <a class="header__nav--link-done">今月の出勤一覧</a>
+                    </li>
+                    <li class="header__nav--item">
+                        <a class="header__nav--link-done">申請一覧</a>
                     </li>
                 @endif
+                <li class="header__nav--item">
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button class="header__nav--button" type="submit">ログアウト</button>
+                    </form>
+                </li>
             </ul>
         </nav>
     </header>
