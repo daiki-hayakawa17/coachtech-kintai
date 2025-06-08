@@ -18,4 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/attendance', [AttendanceController::class, 'attendanceView'])->name('attendance.view');
+Route::middleware('auth')->group(function () {
+    Route::get('/attendance', [AttendanceController::class, 'attendanceView'])->name('attendance.view');
+    Route::post('/attendance', [AttendanceController::class, 'updateStatus'])->name('update.status');
+});
+
