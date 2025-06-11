@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="header">
-        <a class="header__title" href="/">
+        <a class="header__title" href="/attendance">
             <img src="{{asset('storage/images/logo.svg') }}" class="header__logo" alt="Coachtechのロゴ">
         </a>
         <nav class="header__nav">
@@ -20,7 +20,7 @@
                         <a class="header__nav--link" href="/attendance">勤怠</a>
                     </li>
                     <li class="header__nav--item">
-                        <a class="header__nav--link">勤怠一覧</a>
+                        <a class="header__nav--link" href="/attendance/list">勤怠一覧</a>
                     </li>
                     <li class="header__nav--item">
                         <a class="header__nav--link">申請</a>
