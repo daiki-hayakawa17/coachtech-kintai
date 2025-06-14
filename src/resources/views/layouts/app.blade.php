@@ -27,7 +27,7 @@
                     </li>
                 @else
                     <li class="header__nav--item">
-                        <a class="header__nav--link-done">今月の出勤一覧</a>
+                        <a class="header__nav--link-done" href="/attendance/list">今月の出勤一覧</a>
                     </li>
                     <li class="header__nav--item">
                         <a class="header__nav--link-done">申請一覧</a>
