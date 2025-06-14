@@ -5,10 +5,14 @@
 @endsection
 
 @section('content')
+    @php
+        $prevMonth = $carbonMonth->copy()->subMonth()->format('Y-m');
+        $nextMonth = $carbonMonth->addMonth()->format('Y-m');
+    @endphp
     <div class="list__content">
         <h1 class="list__title">勤怠一覧</h1>
         <div class="month__title">
-            <a class="previous__month">
+            <a class="previous__month" href="{{ route('attendance.list', ['year' => $prevMonth, 'month' => $prevMonth]) }}">
                 <img class="left__arrow" src="{{ asset('storage/images/leftArrow.svg') }}" alt="左矢印">
                 <p class="previous__month--text">前月</p>
             </a>
@@ -16,7 +20,7 @@
                 <img class="calendar__image" src="{{ asset('storage/images/calendar.png') }}" alt="カレンダー">
                 <h2 class="current__month--text">{{ $currentMonth }}</h2>
             </div>
-            <a class="next__month">
+            <a class="next__month" href="{{ route('attendance.list', ['year' => $nextMonth, 'month' => $nextMonth]) }}">
                 <p class="next__month--text">翌月</p>
                 <img class="right__arrow" src="{{ asset('storage/images/rightArrow.svg') }}" alt="右矢印">
             </a>

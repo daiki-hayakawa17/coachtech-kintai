@@ -31,16 +31,12 @@ class AttendanceSeeder extends Seeder
 
             $breakIn = $date->copy()->setTime(12,0);
             $breakOut = $date->copy()->setTime(13,0);
-            $breakMinutes = $breakIn->diffInMinutes($breakOut);
-
-            $workMinutes = $clockIn->diffInMinutes($clockOut) - $breakMinutes;
 
             $attendance = Attendance::create([
                 'user_id' => $userId,
                 'date' => $date->toDateString(),
                 'clock_in' => $clockIn,
                 'clock_out' => $clockOut,
-                'work_time' => $workMinutes,
                 'status' => 'done',
             ]);
 
@@ -48,7 +44,6 @@ class AttendanceSeeder extends Seeder
                 'attendance_id' => $attendance->id,
                 'break_in' => $breakIn,
                 'break_out' => $breakOut,
-                'break_time' => $breakMinutes,
             ]);
         }
     }

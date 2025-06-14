@@ -15,7 +15,6 @@ class Attendance extends Model
         'date',
         'clock_in',
         'clock_out',
-        'work_time',
         'status',
     ];
 
@@ -34,7 +33,7 @@ class Attendance extends Model
         switch ($this->status) {
             case 'working':
                 return '出勤中';
-            case 'break':
+            case 'breaking':
                 return '休憩中';
             case 'done':
                 return '退勤済';

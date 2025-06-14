@@ -14,7 +14,6 @@ class BreakTime extends Model
         'attendance_id',
         'break_in',
         'break_out',
-        'break_time',
     ];
 
     public function attendance()

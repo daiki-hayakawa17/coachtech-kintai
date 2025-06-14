@@ -58,10 +58,6 @@ class AttendanceController extends Controller
                         'clock_out' => $now,
                         'status' => 'done',
                     ]);
-
-                    $attendance->update([
-                        'work_time' => $attendance->work_time,
-                    ]);
                 }
                 break;
 
@@ -70,7 +66,7 @@ class AttendanceController extends Controller
                     $attendance->breakTimes()->create([
                         'break_in' => $now,
                     ]);
-                    $attendance->update(['status' => 'break']);
+                    $attendance->update(['status' => 'breaking']);
                 }
                 break;
             
@@ -81,10 +77,6 @@ class AttendanceController extends Controller
                         $break->update([
                             'break_out' => $now
                         ]);
-
-                        $duration = $now->diffInMinutes(Carbon::parse($break->break_in));
-
-                        $break->update(['break_time' => $duration]);
                     }
                     $attendance->update(['status' => 'working']);
                 }
@@ -94,20 +86,25 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.view');
     }
 
-    public function listView()
+    public function listView(Request $request)
     {
         $statusLabel = $this->getTodayStatusLabel();
-        $currentMonth = Carbon::now()->format('Y年/n月');
+
+        $month = $request->input('month', now()->format('Y-m'));
+
+        $carbonMonth = Carbon::createFromFormat('Y-m', $month);
+
+        $currentMonth = $carbonMonth->format('Y年/n月');
 
         $user = Auth::user();
 
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
+        $startOfMonth = $carbonMonth->copy()->startOfMonth();
+        $endOfMonth = $carbonMonth->copy()->endOfMonth();
 
         $attendances = $user->attendances()->with('breaktimes')->whereBetWeen('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
 
         $dates = CarbonPeriod::create($startOfMonth,    $endOfMonth);
 
-        return view('list', compact('statusLabel', 'currentMonth', 'attendances', 'dates'));
+        return view('list', compact('statusLabel', 'currentMonth', 'attendances', 'dates', 'carbonMonth'));
     }
 }
