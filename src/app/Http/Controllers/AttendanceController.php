@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use App\Models\Attendance;
 
 class AttendanceController extends Controller
 {
@@ -106,5 +107,17 @@ class AttendanceController extends Controller
         $dates = CarbonPeriod::create($startOfMonth,    $endOfMonth);
 
         return view('list', compact('statusLabel', 'currentMonth', 'attendances', 'dates', 'carbonMonth'));
+    }
+
+    public function detail($attendance_id)
+    {
+        $user = Auth::user();
+        $statusLabel = $this->getTodayStatusLabel();
+
+        $attendance = Attendance::with('breaktimes')->find($attendance_id);
+        $breaktimes = $attendance->breaktimes->take(2);
+
+        //dd($breaktimes);
+        return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes'));
     }
 }
