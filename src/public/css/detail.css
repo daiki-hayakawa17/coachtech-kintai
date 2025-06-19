@@ -1,0 +1,138 @@
+main {
+    background-color: #f0eff2;
+    
+}
+
+.detail__content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 93px 306px 164px;
+}
+
+.detail__title {
+    padding-left: 21px;
+    padding-bottom: 5px;
+    border-left: 8px solid #000;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+}
+
+.edit__form {
+    background-color: #fff;
+    margin-top: 55px;
+    border: none;
+    border-radius: 10px;
+}
+
+.user__name,
+.attendance__date,
+.form__group--work,
+.form__group--break,
+.form__group--text {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e1e1e1;
+    padding-left: 64px;
+}
+
+.user__name {
+    height: 80px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+.user__name--inner,
+.attendance__date--year {
+    margin-left: 258px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.attendance__date,
+.form__group--work {
+    height: 90px;
+}
+
+.attendance__date--day {
+    margin-left: 142px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.form__group--work input,
+.form__group--break input {
+    width: 103px;
+    height: 28px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+span {
+    margin-left: 51px;
+}
+
+.clock__in--input {
+    margin-left: 179px;
+}
+
+.clock__out--input,
+.break__out--input {
+    margin-left: 43px;
+}
+
+.form__group--break {
+    height: 95px;
+}
+
+.break__in--input {
+    margin-left: 229px;
+}
+
+.break__in--input--second {
+    margin-left: 215px;
+}
+
+.form__group--text {
+    height: 106px;
+}
+
+.form__group--text textarea {
+    width: 316px;
+    height: 72px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    padding: 9px 13px;
+    margin-left: 232px;
+}
+
+.form__button {
+    margin-top: 36px;
+    text-align: right;
+    background-color: none;
+}
+
+.form__button--submit {
+    width: 130px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+}
