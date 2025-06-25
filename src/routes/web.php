@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'attendanceView'])->name('attendance.view');
     Route::post('/attendance', [AttendanceController::class, 'updateStatus'])->name('update.status');
     Route::get('attendance/list', [AttendanceController::class, 'listView'])->name('attendance.list');
-    Route::get('/attendance/{attendance_id}', [AttendanceController::class, 'detail'])->name('attendance.detail');
+    Route::get('/attendance/{attendance_id}', [RequestController::class, 'detail'])->name('attendance.detail');
+    Route::post('/attendance/{attendance_id}', [RequestController::class, 'storeRequest']);
 });
 

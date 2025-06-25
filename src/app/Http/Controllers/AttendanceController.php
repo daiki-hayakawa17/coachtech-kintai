@@ -109,15 +109,5 @@ class AttendanceController extends Controller
         return view('list', compact('statusLabel', 'currentMonth', 'attendances', 'dates', 'carbonMonth'));
     }
 
-    public function detail($attendance_id)
-    {
-        $user = Auth::user();
-        $statusLabel = $this->getTodayStatusLabel();
-
-        $attendance = Attendance::with('breaktimes')->find($attendance_id);
-        $breaktimes = $attendance->breaktimes->take(2);
-
-        //dd($breaktimes);
-        return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes'));
-    }
+    
 }

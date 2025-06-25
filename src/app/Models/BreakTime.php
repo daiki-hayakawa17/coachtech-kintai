@@ -21,6 +21,11 @@ class BreakTime extends Model
         return $this->belongsTo(Attendance::class);
     }
 
+    public function breakTimeRequest()
+    {
+        return $this->hasOne(breakTimeRequest::class);
+    }
+
     public function getDurationAttribute()
     {
         if (!$this->break_in || !$this->break_out) {
