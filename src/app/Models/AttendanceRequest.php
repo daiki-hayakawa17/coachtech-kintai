@@ -29,7 +29,7 @@ class AttendanceRequest extends Model
 
     public function attendance()
     {
-        return $this->belonsTo(Attendance::class);
+        return $this->belongsTo(Attendance::class);
     }
 
     public function breakTimeRequests()

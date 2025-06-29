@@ -65,4 +65,19 @@ class RequestController extends Controller
     
         return redirect()->route('attendance.detail', ['attendance_id' => $attendance_id]);
     }
+
+    public function listView()
+    {
+        $user = Auth::user();
+        $page = request()->query('page', 'waiting');
+        $statusLabel = $this->getTodayStatusLabel();
+
+        if ($page === 'waiting') {
+            $attendanceRequests = AttendanceRequest::with('breakTimeRequests', 'attendance')->where('status', 'waiting')->get();
+        } elseif ($page === 'approved') {
+            $attendanceRequests = AttendanceRequest::with('breakTimeRequests', 'attendance')->where('status', 'approved')->get();
+        }
+
+        return view('request', compact('attendanceRequests', 'statusLabel', 'user'));
+    }
 }
