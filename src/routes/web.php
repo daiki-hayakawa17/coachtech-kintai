@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\AdminListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/stamp_correction_request/list', [RequestController::class, 'listView'])->name('request.list');
 });
 
+Route::get('/admin/login', function () {
+    return view('admin.login');
+})->name('admin.login');
+
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/list', [AdminListController::class, 'listView'])->name('admin.list');
+});

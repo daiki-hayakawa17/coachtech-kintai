@@ -35,7 +35,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::loginView(function () {
-            return view('auth.login');
+            return request()->is('admin/login') ? view('admin.login') : view('auth.login');
         });
 
         RateLimiter::for('login', function (Request $request) {
