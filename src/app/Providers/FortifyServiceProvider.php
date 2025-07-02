@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+use App\Http\Controllers\Auth\AdminAuthenticatedSessionController;
+use Illuminate\Support\Facades\Route;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -35,8 +38,12 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::loginView(function () {
-            return request()->is('admin/login') ? view('admin.login') : view('auth.login');
+            return request()->is('/admin/login') ? view('admin.login') : view('auth.login');
         });
+
+        Route::middleware('web')->post('/admin/login', [AdminAuthenticatedSessionController::class, 'store']);
+        Route::middleware('web')->post('/login', [CustomAuthenticatedSessionController::class, 'store']);
+        Route::middleware('web')->post('/logout', [CustomAuthenticatedSessionController::class, 'destroy']);
 
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
