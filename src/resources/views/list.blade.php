@@ -7,7 +7,7 @@
 @section('content')
     @php
         $prevMonth = $carbonMonth->copy()->subMonth()->format('Y-m');
-        $nextMonth = $carbonMonth->addMonth()->format('Y-m');
+        $nextMonth = $carbonMonth->copy()->addMonth()->format('Y-m');
     @endphp
     <div class="list__content">
         <h1 class="list__title">勤怠一覧</h1>

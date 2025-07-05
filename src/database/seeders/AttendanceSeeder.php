@@ -14,37 +14,39 @@ class AttendanceSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        $userId = 1;
+        public function run()
+        {
+            $userIds = [1, 3];
 
-        $startDate = Carbon::now()->subMonth()->startOfMonth();
-        $endDate = Carbon::today();
+            foreach ($userIds as $userId) {
+            $startDate = Carbon::now()->subMonth()->startOfMonth();
+            $endDate = Carbon::today();
 
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
-            if (rand(1,100) <= 30) {
-                continue;
+            for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+                if (rand(1,100) <= 30) {
+                    continue;
+                }
+
+                $clockIn = $date->copy()->setTime(9,0);
+                $clockOut = $date->copy()->setTime(18, 0);
+
+                $breakIn = $date->copy()->setTime(12,0);
+                $breakOut = $date->copy()->setTime(13,0);
+
+                $attendance = Attendance::create([
+                    'user_id' => $userId,
+                    'date' => $date->toDateString(),
+                    'clock_in' => $clockIn,
+                    'clock_out' => $clockOut,
+                    'status' => 'done',
+                ]);
+
+                BreakTime::create([
+                    'attendance_id' => $attendance->id,
+                    'break_in' => $breakIn,
+                    'break_out' => $breakOut,
+                ]);
             }
-
-            $clockIn = $date->copy()->setTime(9,0);
-            $clockOut = $date->copy()->setTime(18, 0);
-
-            $breakIn = $date->copy()->setTime(12,0);
-            $breakOut = $date->copy()->setTime(13,0);
-
-            $attendance = Attendance::create([
-                'user_id' => $userId,
-                'date' => $date->toDateString(),
-                'clock_in' => $clockIn,
-                'clock_out' => $clockOut,
-                'status' => 'done',
-            ]);
-
-            BreakTime::create([
-                'attendance_id' => $attendance->id,
-                'break_in' => $breakIn,
-                'break_out' => $breakOut,
-            ]);
         }
     }
 }

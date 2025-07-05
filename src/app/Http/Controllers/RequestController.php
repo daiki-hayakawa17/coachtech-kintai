@@ -28,11 +28,13 @@ class RequestController extends Controller
     {
         $user = Auth::user();
         $statusLabel = $this->getTodayStatusLabel();
+        $layout = Auth::user()->role === 'admin' ? 'layouts.admin.app' : 'layouts.app';
 
         $attendance = Attendance::with('breaktimes', 'attendanceRequest')->find($attendance_id);
         $breaktimes = $attendance->breaktimes->take(2);
+        $attendance_user = $attendance->user;
 
-        return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes'));
+        return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes', 'attendance_user', 'layout'));
     }
 
     public function storeRequest($attendance_id, Request $request)

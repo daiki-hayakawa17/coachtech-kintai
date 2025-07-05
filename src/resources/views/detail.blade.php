@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends($layout)
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/detail.css') }}">   
@@ -16,7 +16,7 @@
             <div class="user__name">
                 <label>名前</label>
                 <p class="user__name--inner">
-                  {{ $user->name}}
+                  {{ $attendance_user->name}}
                 </p> 
             </div>
             <div class="attendance__date">
