@@ -15,24 +15,15 @@
         </a>
         <nav class="header__nav">
             <ul class="header__nav--list">
-                @if ($statusLabel !== '退勤済')
-                    <li class="header__nav--item">
-                        <a class="header__nav--link" href="/admin/list">勤怠一覧</a>
-                    </li>
-                    <li class="header__nav--item">
-                        <a class="header__nav--link" href="/admin/staff/list">スタッフ一覧</a>
-                    </li>
-                    <li class="header__nav--item">
-                        <a class="header__nav--link" href="{{ route('request.list') }}">申請一覧</a>
-                    </li>
-                @else
-                    <li class="header__nav--item">
-                        <a class="header__nav--link-done" href="/attendance/list">今月の出勤一覧</a>
-                    </li>
-                    <li class="header__nav--item">
-                        <a class="header__nav--link-done">申請一覧</a>
-                    </li>
-                @endif
+                <li class="header__nav--item">
+                    <a class="header__nav--link" href="/admin/list">勤怠一覧</a>
+                </li>
+                <li class="header__nav--item">
+                    <a class="header__nav--link" href="/admin/staff/list">スタッフ一覧</a>
+                </li>
+                <li class="header__nav--item">
+                    <a class="header__nav--link" href="{{ route('request.list') }}">申請一覧</a>
+                </li>
                 <li class="header__nav--item">
                     <form action="/logout" method="post">
                         @csrf
