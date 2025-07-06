@@ -10,22 +10,8 @@ use App\Models\Attendance;
 
 class AdminListController extends Controller
 {
-    public function getTodayStatusLabel()
-    {
-        $user = Auth::user();
-        $attendance = $user->attendances()->whereDate('clock_in', today())->first();
-
-        if ($attendance) {
-            return $attendance->status_label;
-        }else {
-            return '勤務外';
-        }
-    }
-
     public function listView(Request $request)
     {
-        $statusLabel = $this->getTodayStatusLabel();
-
         $today = Carbon::now()->isoFormat('YYYY年M月D日');
         $day = $request->input('day', now()->format('Y-m-d'));
 
@@ -39,6 +25,13 @@ class AdminListController extends Controller
             $query->where('date', $day);
         }, 'attendances.breaktimes'])->get();
 
-        return view('admin.list', compact('today', 'statusLabel', 'carbonDay', 'currentDay', 'users'));
+        return view('admin.list', compact('today', 'carbonDay', 'currentDay', 'users'));
+    }
+
+    public function staffListView()
+    {
+        $users = User::where('role', 'user')->get();
+
+        return view('admin.staff', compact('users'));
     }
 }
