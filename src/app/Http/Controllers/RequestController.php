@@ -74,12 +74,20 @@ class RequestController extends Controller
         $page = request()->query('page', 'waiting');
         $statusLabel = $this->getTodayStatusLabel();
 
-        if ($page === 'waiting') {
-            $attendanceRequests = AttendanceRequest::with('breakTimeRequests', 'attendance')->where('status', 'waiting')->get();
-        } elseif ($page === 'approved') {
-            $attendanceRequests = AttendanceRequest::with('breakTimeRequests', 'attendance')->where('status', 'approved')->get();
+        $query = AttendanceRequest::with(['breakTimeRequests', 'attendance'])->where('status', $page);
+
+        if ($user->role === 'user') {
+            $query->whereHas('attendance', function ($attendanceQuery) use ($user) {
+                $attendanceQuery->where('user_id', $user->id);
+            });
+
+            $attendanceRequests = $query->get();
+
+            return view('request', compact('attendanceRequests', 'statusLabel', 'user'));
         }
 
-        return view('request', compact('attendanceRequests', 'statusLabel', 'user'));
+        $attendanceRequests = $query->get();
+
+        return view('admin.request', compact('attendanceRequests', 'statusLabel', 'user'));
     }
 }
