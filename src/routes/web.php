@@ -36,4 +36,5 @@ Route::get('/admin/login', function () {
 Route::middleware('admin')->group(function () {
     Route::get('/admin/list', [AdminListController::class, 'listView'])->name('admin.list');
     Route::get('/admin/staff/list', [AdminListController::class, 'staffListView'])->name('admin.staff');
+    Route::get('admin/attendance/staff/{user_id}', [AdminListController::class, 'attendanceList'])->name('staff.attendance');
 });

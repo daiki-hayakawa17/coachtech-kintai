@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Carbon\CarbonPeriod;
 use App\Models\Attendance;
+
 
 class AdminListController extends Controller
 {
@@ -33,5 +35,25 @@ class AdminListController extends Controller
         $users = User::where('role', 'user')->get();
 
         return view('admin.staff', compact('users'));
+    }
+
+    public function attendanceList($user_id, Request $request)
+    {
+        $user = User::find($user_id);
+
+        $month = $request->input('month', now()->format('Y-m'));
+
+        $carbonMonth = Carbon::createFromFormat('Y-m', $month);
+
+        $currentMonth = $carbonMonth->format('Y/n');
+
+        $startOfMonth = $carbonMonth->copy()->startOfMonth();
+        $endOfMonth = $carbonMonth->copy()->endOfMonth();
+
+        $attendances = $user->attendances()->with('breaktimes')->whereBetWeen('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
+
+        $dates = CarbonPeriod::create($startOfMonth,    $endOfMonth);
+
+        return view('admin.staff_attendance', compact('user', 'currentMonth', 'attendances', 'dates', 'carbonMonth'));
     }
 }
