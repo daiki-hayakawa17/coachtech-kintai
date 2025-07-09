@@ -1,0 +1,143 @@
+main {
+    background-color: #f0eff2;
+
+}
+
+.detail__content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 93px 306px 164px;
+}
+
+.detail__title {
+    padding-left: 21px;
+    padding-bottom: 5px;
+    border-left: 8px solid #000;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+}
+
+.edit__form {
+    background-color: #fff;
+    margin-top: 55px;
+    border: none;
+    border-radius: 10px;
+}
+
+.user__name,
+.attendance__date,
+.form__group--work,
+.form__group--break,
+.form__group--text {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #e1e1e1;
+    padding-left: 64px;
+}
+
+.user__name {
+    height: 80px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #737373;
+}
+
+.user__name--inner,
+.attendance__date--year {
+    margin-left: 258px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.attendance__date,
+.form__group--work {
+    height: 90px;
+}
+
+.attendance__date--day {
+    margin-left: 142px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.clock__in,
+.clock__out,
+.break__in,
+.break__out,
+.break__in--second,
+.break__out--second {
+    width: 103px;
+    height: 28px;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
+span {
+    margin-left: 51px;
+}
+
+.clock__in {
+    margin-left: 179px;
+}
+
+.clock__out,
+.break__out {
+    margin-left: 43px;
+}
+
+.form__group--break {
+    height: 95px;
+}
+
+.break__in {
+    margin-left: 229px;
+}
+
+.break__in--second {
+    margin-left: 215px;
+}
+
+.form__group--text {
+    height: 106px;
+}
+
+.note {
+    width: 316px;
+    height: 72px;
+    margin-left: 258px;
+    font-size: 16px;
+    font-weight: 700;
+    align-content: center;
+}
+
+.form__button {
+    margin-top: 36px;
+    text-align: right;
+    background-color: none;
+}
+
+.form__button--submit {
+    width: 130px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+}
+
+.already__requested {
+    color: #FF000080;
+    display: flex;
+    justify-content: right;
+    font-size: 18px;
+    font-weight: 800;
+}

@@ -36,7 +36,7 @@
                 <td>{{ \Carbon\Carbon::parse($attendanceRequest->attendance->date)->format('Y/m/d') }}</td>
                 <td>{{ $attendanceRequest->note }}</td>
                 <td>{{ \Carbon\Carbon::parse($attendanceRequest->created_at)->format('Y/m/d') }}</td>
-                <td><a href="/stamp_correction_request/approved/{{ $attendanceRequest->attendance_id }}" class="detail__link">詳細</a>
+                <td><a href="/stamp_correction_request/approved/{{ $attendanceRequest->id }}" class="detail__link">詳細</a>
                 </td>
             </tr>
             @endforeach

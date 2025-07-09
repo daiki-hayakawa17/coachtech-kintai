@@ -30,7 +30,7 @@ class Attendance extends Model
 
     public function attendanceRequest()
     {
-        return $this->hasOne(AttendanceRequest::class);
+        return $this->hasOne(AttendanceCorrectRequest::class);
     }
 
     public function getStatusLabelAttribute()
