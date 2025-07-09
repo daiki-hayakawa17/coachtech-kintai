@@ -17,6 +17,6 @@ class BreakTimeRequest extends Model
 
     public function AttendanceRequest()
     {
-        return $this->belongsTo(AttendanceRequest::class);
+        return $this->belongsTo(AttendanceCorrectRequest::class);
     }
 }

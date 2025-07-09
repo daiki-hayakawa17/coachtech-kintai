@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Attendance;
-use App\Models\AttendanceRequest;
+use App\Models\AttendanceCorrectRequest;
 use App\Models\BreakTimeRequest;
 
 
@@ -43,7 +43,7 @@ class RequestController extends Controller
 
         $attendance = Attendance::find($attendance_id);
 
-        $attendanceRequest = AttendanceRequest::create([
+        $attendanceRequest = AttendanceCorrectRequest::create([
             'attendance_id' => $attendance_id,
             'clock_in' => Carbon::parse($attendance->date . ' ' . $request->clock_in),
             'clock_out' => Carbon::parse($attendance->date . ' ' . $request->clock_out),
@@ -52,14 +52,14 @@ class RequestController extends Controller
         ]);
 
         $attendanceRequest->breakTimeRequests()->create([
-            'attendance_request_id' => $attendanceRequest->id,
+            'attendance_correct_request_id' => $attendanceRequest->id,
             'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[0]),
             'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
         ]);
 
         if (!empty($request->break_in[1]) && !empty($request->break_out[1])) {
             $attendanceRequest->breakTimeRequests()->create([
-                'attendance_request_id' => $attendanceRequest->id,
+                'attendance_correct_request_id' => $attendanceRequest->id,
                 'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[1]),
                 'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[1]),
             ]);
@@ -74,7 +74,7 @@ class RequestController extends Controller
         $page = request()->query('page', 'waiting');
         $statusLabel = $this->getTodayStatusLabel();
 
-        $query = AttendanceRequest::with(['breakTimeRequests', 'attendance'])->where('status', $page);
+        $query = AttendanceCorrectRequest::with(['breakTimeRequests', 'attendance'])->where('status', $page);
 
         if ($user->role === 'user') {
             $query->whereHas('attendance', function ($attendanceQuery) use ($user) {
@@ -89,5 +89,15 @@ class RequestController extends Controller
         $attendanceRequests = $query->get();
 
         return view('admin.request', compact('attendanceRequests', 'statusLabel', 'user'));
+    }
+
+    public function approvedView($attendance_correct_request_id)
+    {
+        $attendanceRequest = AttendanceCorrectRequest::with('attendance')->find($attendance_correct_request_id);
+        $attendance = $attendanceRequest->attendance;
+        $breakTimes = $attendance->breaktimes->take(2);
+        $user = $attendance->user;
+
+        return view('admin.approved', compact('attendance', 'breakTimes', 'user', 'attendanceRequest'));
     }
 }
