@@ -28,9 +28,9 @@ class Attendance extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function attendanceRequest()
+    public function attendanceRequests()
     {
-        return $this->hasOne(AttendanceCorrectRequest::class);
+        return $this->hasMany(AttendanceCorrectRequest::class);
     }
 
     public function getStatusLabelAttribute()

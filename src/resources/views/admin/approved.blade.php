@@ -6,10 +6,10 @@
 
 @section('content')
     @php
-        $break1 = $attendance->breaktimes->get(0);
-        $break2 = $attendance->breaktimes->get(1);
+        $break1 = $attendanceRequest->breakTimeRequests->get(0);
+        $break2 = $attendanceRequest->breakTimeRequests->get(1);
     @endphp
-    <form class="detail__content" action="/stamp_correction_request/approved/{{ $attendanceRequest->attendance_id }}" method="post">
+    <form class="detail__content" action="/stamp_correction_request/approved/{{ $attendanceRequest->id }}" method="post">
         @csrf
         <h1 class="detail__title">勤怠詳細</h1>
         <div class="edit__form">
@@ -26,9 +26,9 @@
             </div>
             <div class="form__group--work">
                 <label>出勤・退勤</label>
-                <p class="clock__in">{{\Carbon\Carbon::parse($attendance->clock_in)->format('H:i') }}</p>
+                <p class="clock__in">{{\Carbon\Carbon::parse($attendanceRequest->clock_in)->format('H:i') }}</p>
                 <span>～</span>
-                <p class="clock__out">{{ \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') }}</p>
+                <p class="clock__out">{{ \Carbon\Carbon::parse($attendanceRequest->clock_out)->format('H:i') }}</p>
             </div>
             <div class="form__group--break">
                 <label>休憩</label>

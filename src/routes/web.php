@@ -37,5 +37,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/list', [AdminListController::class, 'listView'])->name('admin.list');
     Route::get('/admin/staff/list', [AdminListController::class, 'staffListView'])->name('admin.staff');
     Route::get('admin/attendance/staff/{user_id}', [AdminListController::class, 'attendanceList'])->name('staff.attendance');
-    Route::get('stamp_correction_request/approved/{attendance_correct_request_id}', [RequestController::class, 'approvedView'])->name('admin.approved');
+    Route::get('stamp_correction_request/approved/{attendance_correct_request_id}', [RequestController::class, 'approvedView'])->name('approved.view');
+    Route::post('stamp_correction_request/approved/{attendance_correct_request_id}', [RequestController::class, 'approved'])->name('admin.approved');
 });
