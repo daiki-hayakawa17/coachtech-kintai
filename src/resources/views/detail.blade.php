@@ -47,7 +47,7 @@
                 <textarea name="note"></textarea>
             </div>
         </div>
-        @if(!$attendance->attendanceRequest)
+        @if(!$attendanceRequest || $attendanceRequest->status === 'approved')
         <div class="form__button">
             <button class="form__button--submit">
                 修正

@@ -134,10 +134,16 @@ span {
     border-radius: 5px;
 }
 
-.already__requested {
-    color: #FF000080;
-    display: flex;
-    justify-content: right;
-    font-size: 18px;
-    font-weight: 800;
+.approved__text {
+    display: inline-block;
+    width: 130px;
+    height: 50px;
+    background-color: #696969;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-align: center;
+    align-content: center;
 }
