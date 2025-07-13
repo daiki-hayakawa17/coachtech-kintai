@@ -44,29 +44,70 @@ class RequestController extends Controller
     {
         $user = Auth::user();
 
-        $attendance = Attendance::find($attendance_id);
+        $attendance = Attendance::with('breakTimes')->find($attendance_id);
 
-        $attendanceRequest = AttendanceCorrectRequest::create([
-            'attendance_id' => $attendance_id,
-            'clock_in' => Carbon::parse($attendance->date . ' ' . $request->clock_in),
-            'clock_out' => Carbon::parse($attendance->date . ' ' . $request->clock_out),
-            'status' => 'waiting',
-            'note' => $request->note,
-        ]);
+        $breakTime1 = $attendance->breakTimes->first();
+        $breakTime2 = $attendance->breakTimes->get(1);
 
-        $attendanceRequest->breakTimeRequests()->create([
-            'attendance_correct_request_id' => $attendanceRequest->id,
-            'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[0]),
-            'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
-        ]);
+        if ($user->role === 'user') {
+            $attendanceRequest = AttendanceCorrectRequest::create([
+                'attendance_id' => $attendance_id,
+                'clock_in' => Carbon::parse($attendance->date . ' ' . $request->clock_in),
+                'clock_out' => Carbon::parse($attendance->date . ' ' . $request->clock_out),
+                'status' => 'waiting',
+                'note' => $request->note,
+            ]);
 
-        if (!empty($request->break_in[1]) && !empty($request->break_out[1])) {
             $attendanceRequest->breakTimeRequests()->create([
                 'attendance_correct_request_id' => $attendanceRequest->id,
-                'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[1]),
-                'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[1]),
+                'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[0]),
+                'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
             ]);
+
+            if (!empty($request->break_in[1]) && !empty($request->break_out[1])) {
+                $attendanceRequest->breakTimeRequests()->create([
+                    'attendance_correct_request_id' => $attendanceRequest->id,
+                    'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[1]),
+                    'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[1]),
+                ]);
+            }
         }
+
+        if ($user->role === 'admin') {
+            $attendance->update([
+                'clock_in' => Carbon::parse($attendance->date . ' ' . $request->clock_in),
+                'clock_out' => Carbon::parse($attendance->date . ' ' . $request->clock_out),
+            ]);
+
+            if ($request->break_in[0] && $request->break_out[0]) {
+                if ($breakTime1) {
+                    $breakTime1->update([
+                        'break_in' => Carbon::parse($attendance->date . ' ' . $request->break_in[0]),
+                        'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
+                    ]);
+                } else {
+                    $attendance->breakTimes()->create([
+                        'break_in' => Carbon::parse($attendance->date . ' ' . $request->break_in[0]),
+                        'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
+                    ]);
+                }
+            }
+
+            if ($request->break_in[1] && $request->break_out[1]) {
+                if ($breakTime2) {
+                    $breakTime2->update([
+                        'break_in' => Carbon::parse($attendance->date . ' ' . $request->break_in[1]),
+                        'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[1]),
+                    ]);
+                } else {
+                    $attendance->breakTimes()->create([
+                        'break_in' => Carbon::parse($attendance->date . ' ' . $request->break_in[1]),
+                        'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[1]),
+                    ]);
+                }
+            }
+        }
+        
     
         return redirect()->route('attendance.detail', ['attendance_id' => $attendance_id]);
     }
