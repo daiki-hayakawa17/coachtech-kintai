@@ -20,7 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'attendanceView'])->name('attendance.view');
     Route::post('/attendance', [AttendanceController::class, 'updateStatus'])->name('update.status');
     Route::get('attendance/list', [AttendanceController::class, 'listView'])->name('attendance.list');
@@ -29,9 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/stamp_correction_request/list', [RequestController::class, 'listView'])->name('request.list');
 });
 
-Route::get('/admin/login', function () {
-    return view('admin.login');
-})->name('admin.login');
+// Route::get('/admin/login', function () {
+//     return view('admin.login');
+// })->name('admin.login');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
 
 Route::middleware('admin')->group(function () {
     Route::get('/admin/list', [AdminListController::class, 'listView'])->name('admin.list');
