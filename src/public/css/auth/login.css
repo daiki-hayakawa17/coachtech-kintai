@@ -53,3 +53,12 @@
     color: #0073cc;
     text-align: center;
 }
+
+.form__error {
+    font-family: "Inter", serif;
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 21px;
+    color: #FD0707;
+}

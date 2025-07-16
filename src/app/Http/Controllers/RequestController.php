@@ -9,6 +9,7 @@ use App\Models\Attendance;
 use App\Models\BreakTime;
 use App\Models\AttendanceCorrectRequest;
 use App\Models\BreakTimeRequest;
+use App\Http\Requests\AttendanceRequest;
 
 
 class RequestController extends Controller
@@ -40,7 +41,7 @@ class RequestController extends Controller
         return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes', 'attendance_user', 'layout', 'attendanceRequest'));
     }
 
-    public function storeRequest($attendance_id, Request $request)
+    public function storeRequest($attendance_id, AttendanceRequest $request)
     {
         $user = Auth::user();
 

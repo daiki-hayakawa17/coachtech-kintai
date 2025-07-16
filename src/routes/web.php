@@ -29,9 +29,9 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::get('/stamp_correction_request/list', [RequestController::class, 'listView'])->name('request.list');
 });
 
-// Route::get('/admin/login', function () {
-//     return view('admin.login');
-// })->name('admin.login');
+Route::get('/admin/login', function () {
+    return view('admin.login');
+})->name('admin.login');
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
