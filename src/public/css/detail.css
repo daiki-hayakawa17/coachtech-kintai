@@ -144,3 +144,12 @@ span {
     font-size: 18px;
     font-weight: 800;
 }
+
+.form__error {
+    font-family: "Inter", serif;
+    margin-left: 10px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 21px;
+    color: #FD0707;
+}

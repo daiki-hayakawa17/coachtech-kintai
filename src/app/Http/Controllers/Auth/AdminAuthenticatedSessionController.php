@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AdminAuthenticatedSessionController extends Controller
 {
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
         $credentials = $request->only('email', 'password');
         $credentials['role'] = 'admin';

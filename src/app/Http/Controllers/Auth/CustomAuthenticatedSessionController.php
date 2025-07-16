@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\Auth\LoginRequest;
 
 class CustomAuthenticatedSessionController extends Controller
 {
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validated();
 
         $user = User::where('email', $credentials['email'])->first();
 
