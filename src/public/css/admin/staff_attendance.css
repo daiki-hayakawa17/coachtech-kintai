@@ -97,3 +97,24 @@ main {
     text-decoration: none;
     color: #000;
 }
+
+.csv__button {
+    margin-top: 36px;
+    text-align: right;
+    background-color: none;
+}
+
+.csv__button--submit {
+    display: inline-block;
+    width: 184px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    align-content: center;
+}
