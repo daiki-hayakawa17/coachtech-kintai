@@ -11,7 +11,7 @@
 <body>
     <header class="header">
         <a class="header__title" href="/attendance">
-            <img src="{{asset('storage/images/logo.svg') }}" class="header__logo" alt="Coachtechのロゴ">
+            <img src="{{asset('images/logo.svg') }}" class="header__logo" alt="Coachtechのロゴ">
         </a>
         <nav class="header__nav">
             <ul class="header__nav--list">
