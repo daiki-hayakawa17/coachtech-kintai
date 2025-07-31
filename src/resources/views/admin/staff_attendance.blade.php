@@ -42,7 +42,7 @@
                 $attendance = $attendances[$date->format('Y-m-d')] ?? null;
             @endphp
             <tr>
-                <td>{{ $date->isoFormat('M月D日(ddd)') }}</td>
+                <td>{{ $date->isoFormat('MM/DD(ddd)') }}</td>
                 <td>{{ isset($attendance) && $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->format('H:i') : '-' }}</td>
                 <td>{{ isset($attendance) && $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->format('H:i') : '-' }}</td>
                 <td>{{ $attendance ?  $attendance->formatted_break_time : '-' }}</td>

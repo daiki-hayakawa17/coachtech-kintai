@@ -95,7 +95,7 @@ class AttendanceController extends Controller
 
         $carbonMonth = Carbon::createFromFormat('Y-m', $month);
 
-        $currentMonth = $carbonMonth->format('Y年/n月');
+        $currentMonth = $carbonMonth->format('Y/m');
 
         $user = Auth::user();
 

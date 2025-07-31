@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Tests\TestCase;
 use App\Models\User;
 
@@ -183,5 +185,27 @@ class UserTest extends TestCase
         $response->assertSessionHasErrors([
             'email' => 'ログイン情報が登録されていません',
         ]);
+    }
+
+    public function test_after_registration_verification_email()
+    {
+        Notification::fake();
+
+        $this->from('/register')->post('/register', [
+            'name' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $user = User::where('email', 'test@example.com')->first();
+        
+        Notification::assertSentTo(
+            $user,
+            VerifyEmail::class,
+            function ($notification, $channels) {
+                return in_array('mail', $channels);
+            }
+        );
     }
 }

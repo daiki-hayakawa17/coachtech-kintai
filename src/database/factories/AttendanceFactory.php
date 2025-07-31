@@ -20,16 +20,15 @@ class AttendanceFactory extends Factory
 
         $clockIn = Carbon::instance($date)->setTime(rand(9,10), rand(0,59));
 
-        $clockOut = (clone $clock_in)->addHours(rand(7,9))->addMinutes(rand(0,59));
+        $clockOut = (clone $clockIn)->addHours(rand(7,9))->addMinutes(rand(0,59));
 
-        $workTime = $clockIn->diffInMinutes($clockOut);
+        
 
         return [
             'user_id' => 1,
             'date' => $clockIn->toDatestring(),
             'clock_in' => $clockIn,
             'clock_out' => $clockOut,
-            'work_time' => $workTime,
             'status' => $this->faker->randomElement(['working', 'break', 'done']),
         ];
     }

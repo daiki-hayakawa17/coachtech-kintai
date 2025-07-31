@@ -108,7 +108,6 @@ class RequestController extends Controller
                 }
             }
         }
-        
     
         return redirect()->route('attendance.detail', ['attendance_id' => $attendance_id]);
     }

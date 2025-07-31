@@ -27,7 +27,7 @@ class AttendanceRequest extends FormRequest
             'clock_in' => ['before:clock_out'],
             'clock_out' => ['after:clock_in'],
             'break_in.*' => ['nullable', 'before:clock_out', 'after:clock_in'],
-            'break_out.*' => ['nullable', 'before:clock_in', 'after:clock_out'],
+            'break_out.*' => ['nullable', 'before:clock_out', 'after:clock_in'],
             'note' => ['required'],
         ];
     }

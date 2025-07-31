@@ -13,16 +13,16 @@
         <h1 class="list__title">{{ $currentDay->isoFormat('YYYY年M月D日') }}の勤怠</h1>
         <div class="day__title">
             <a class="previous__day" href="{{ route('admin.list', ['year' => $prevDay, 'month' => $prevDay, 'day' => $prevDay]) }}">
-                <img class="left__arrow" src="{{ asset('storage/images/leftArrow.svg') }}" alt="左矢印">
+                <img class="left__arrow" src="{{ asset('images/leftArrow.svg') }}" alt="左矢印">
                 <p class="previous__day--text">前日</p>
             </a>
             <div class="current__day">
-                <img class="calendar__image" src="{{ asset('storage/images/calendar.png') }}" alt="カレンダー">
+                <img class="calendar__image" src="{{ asset('images/calendar.png') }}" alt="カレンダー">
                 <h2 class="current__day--text">{{ $currentDay->format('Y/m/d') }}</h2>
             </div>
-            <a class="next__day" href="{{ route('admin.list', ['year' => $nextDay, 'month' => $nextDay]) }}">
+            <a class="next__day" href="{{ route('admin.list', ['year' => $nextDay, 'month' => $nextDay, 'day' => $nextDay]) }}">
                 <p class="next__day--text">翌日</p>
-                <img class="right__arrow" src="{{ asset('storage/images/rightArrow.svg') }}" alt="右矢印">
+                <img class="right__arrow" src="{{ asset('images/rightArrow.svg') }}" alt="右矢印">
             </a>
         </div>
 

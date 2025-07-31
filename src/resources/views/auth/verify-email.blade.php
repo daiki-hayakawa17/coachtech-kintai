@@ -15,7 +15,7 @@
 <body>
     <header class="header">
         <div class="header__title">
-            <img src="{{ asset('storage/images/logo.svg') }}" class="header__logo">
+            <img src="{{ asset('images/logo.svg') }}" class="header__logo">
         </div>
     </header> 
     
