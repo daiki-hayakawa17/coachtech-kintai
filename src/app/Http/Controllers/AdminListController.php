@@ -46,7 +46,7 @@ class AdminListController extends Controller
 
         $carbonMonth = Carbon::createFromFormat('Y-m', $month);
 
-        $currentMonth = $carbonMonth->format('Y/n');
+        $currentMonth = $carbonMonth->format('Y/m');
 
         $startOfMonth = $carbonMonth->copy()->startOfMonth();
         $endOfMonth = $carbonMonth->copy()->endOfMonth();
