@@ -63,6 +63,8 @@ class AttendanceListTest extends TestCase
 
     public function test_all_attendance_records_are_displayed_in_attendance_list()
     {
+        Carbon::setTestNow(Carbon::create(2025, 7, 30, 14,00));
+
         $user = User::factory()->create();
 
         $this->actingAs($user);

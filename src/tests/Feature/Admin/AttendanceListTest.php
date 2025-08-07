@@ -55,7 +55,7 @@ class AttendanceListTest extends TestCase
 
         $this->actingAs($admin);
 
-        $response = $this->get('/admin/list');
+        $response = $this->get('/admin/attendance/list');
 
         $response->assertSee('testuser');
         $response->assertSee('testuser2');
@@ -74,7 +74,7 @@ class AttendanceListTest extends TestCase
 
         $this->actingAs($admin);
 
-        $response = $this->get('/admin/list');
+        $response = $this->get('/admin/attendance/list');
 
         $response->assertSee('2025年7月19日の勤怠');
         $response->assertSee('2025/07/19');
@@ -103,12 +103,12 @@ class AttendanceListTest extends TestCase
 
         $this->actingAs($admin);
 
-        $response = $this->get('admin/list');
+        $response = $this->get('/admin/attendance/list');
 
         $response->assertSee('2025年7月19日の勤怠');
         $response->assertSee('前日');
 
-        $previous = $this->get('/admin/list?year=2025-07-18&month=2025-07-18&day=2025-07-18');
+        $previous = $this->get('/admin/attendance/list?year=2025-07-18&month=2025-07-18&day=2025-07-18');
 
         $previous->assertSee('2025年7月18日の勤怠');
         $previous->assertSee('testuser');
@@ -138,12 +138,12 @@ class AttendanceListTest extends TestCase
 
         $this->actingAs($admin);
 
-        $response = $this->get('admin/list');
+        $response = $this->get('/admin/attendance/list');
 
         $response->assertSee('2025年7月19日の勤怠');
         $response->assertSee('前日');
 
-        $previous = $this->get('/admin/list?year=2025-07-20&month=2025-07-20&day=2025-07-20');
+        $previous = $this->get('/admin/attendance/list?year=2025-07-20&month=2025-07-20&day=2025-07-20');
 
         $previous->assertSee('2025年7月20日の勤怠');
         $previous->assertSee('testuser');

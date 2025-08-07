@@ -4,31 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Response;
 use App\Models\User;
 use Carbon\CarbonPeriod;
-use App\Models\Attendance;
 
 
 class AdminListController extends Controller
 {
-    public function listView(Request $request)
+    public function listView()
     {
         $today = Carbon::now()->isoFormat('YYYY年M月D日');
-        $day = $request->input('day', now()->format('Y-m-d'));
+        $day = request()->query('day', now()->format('Y-m-d'));
 
         $carbonDay = Carbon::createFromFormat('Y-m-d', $day);
-        $currentDay = $carbonDay;
 
         $users = User::where('role', 'user')->whereHas('attendances', function ($query) use ($day) {
             $query->where('date', $day);
         })
         ->with(['attendances' => function ($query) use ($day) {
-            $query->where('date', $day);
-        }, 'attendances.breaktimes'])->get();
+            $query->where('date', $day)->with('breakTimes');
+        }])->get();
 
-        return view('admin.list', compact('today', 'carbonDay', 'currentDay', 'users'));
+        return view('admin.list', compact('today', 'carbonDay', 'users'));
     }
 
     public function staffListView()
@@ -40,7 +37,7 @@ class AdminListController extends Controller
 
     public function attendanceList($user_id, Request $request)
     {
-        $user = User::find($user_id);
+        $user = User::findOrFail($user_id);
 
         $month = $request->input('month', now()->format('Y-m'));
 
@@ -51,7 +48,7 @@ class AdminListController extends Controller
         $startOfMonth = $carbonMonth->copy()->startOfMonth();
         $endOfMonth = $carbonMonth->copy()->endOfMonth();
 
-        $attendances = $user->attendances()->with('breaktimes')->whereBetWeen('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
+        $attendances = $user->attendances()->with('breakTimes')->whereBetween('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
 
         $dates = CarbonPeriod::create($startOfMonth,    $endOfMonth);
 
@@ -88,8 +85,8 @@ class AdminListController extends Controller
             $attendance = $attendances->get($date->format('Y-m-d'));
 
             if ($attendance) {
-                $clockIn = optional($attendance->clock_in)->format('H:i');
-                $clockOut = optional($attendance->clock_out)->format('H:i');
+                $clockIn = $attendance && $attendance->clock_in ? Carbon::parse($attendance->clock_in)->format('H:i') : '-';
+                $clockOut = $attendance && $attendance->clock_out ? Carbon::parse($attendance->clock_out)->format('H:i') : '-';
                 $break = gmdate('H:i', $attendance->total_break_minutes * 60);
                 $work = gmdate('H:i', $attendance->work_time * 60);
             } else {

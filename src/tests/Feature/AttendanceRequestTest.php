@@ -268,7 +268,7 @@ class AttendanceRequestTest extends TestCase
 
         $response->assertSee('2025/08/19');
 
-        $secondResponse = $this->get('/stamp_correction_request/approved/' . $attendanceRequest->id);
+        $secondResponse = $this->get('/stamp_correction_request/approve/' . $attendanceRequest->id);
 
         $secondResponse->assertSee('14:30');
     }
@@ -332,7 +332,7 @@ class AttendanceRequestTest extends TestCase
 
         $attendanceRequest = AttendanceCorrectRequest::where('attendance_id', $attendance->id)->first();
 
-        $this->actingAs($admin)->from('/stamp_correction_request/approved/' . $attendanceRequest->id)->post('/stamp_correction_request/approved/' . $attendanceRequest->id);
+        $this->actingAs($admin)->from('/stamp_correction_request/approve/' . $attendanceRequest->id)->post('/stamp_correction_request/approve/' . $attendanceRequest->id);
 
         $response = $this->get('/stamp_correction_request/list?page=approved');
 

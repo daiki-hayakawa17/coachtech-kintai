@@ -30,15 +30,15 @@ class RequestController extends Controller
     {
         $user = Auth::user();
         $statusLabel = $this->getTodayStatusLabel();
-        $layout = Auth::user()->role === 'admin' ? 'layouts.admin.app' : 'layouts.app';
+        $layout = $user->role === 'admin' ? 'layouts.admin.app' : 'layouts.app';
 
-        $attendance = Attendance::with('breaktimes', 'attendanceRequests')->find($attendance_id);
-        $breaktimes = $attendance->breaktimes->take(2);
+        $attendance = Attendance::with('breakTimes', 'attendanceRequests', 'user')->find($attendance_id);
+        $breakTimes = $attendance->breakTimes->take(2);
         $attendance_user = $attendance->user;
 
         $attendanceRequest = $attendance->attendanceRequests()->latest()->first();
 
-        return view('detail', compact('attendance', 'user', 'statusLabel', 'breaktimes', 'attendance_user', 'layout', 'attendanceRequest'));
+        return view('detail', compact('attendance', 'user', 'statusLabel', 'breakTimes', 'attendance_user', 'layout', 'attendanceRequest'));
     }
 
     public function storeRequest($attendance_id, AttendanceRequest $request)
@@ -59,11 +59,12 @@ class RequestController extends Controller
                 'note' => $request->note,
             ]);
 
-            $attendanceRequest->breakTimeRequests()->create([
-                'attendance_correct_request_id' => $attendanceRequest->id,
-                'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[0]),
-                'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
-            ]);
+            if (!empty($request->break_in[0]) && !empty($request->break_out[0])) {
+                $attendanceRequest->breakTimeRequests()->create([
+                    'break_in' => Carbon::parse($attendance->date . ' ' .$request->break_in[0]),
+                    'break_out' => Carbon::parse($attendance->date . ' ' . $request->break_out[0]),
+                ]);
+            }
 
             if (!empty($request->break_in[1]) && !empty($request->break_out[1])) {
                 $attendanceRequest->breakTimeRequests()->create([
@@ -135,7 +136,7 @@ class RequestController extends Controller
         return view('admin.request', compact('attendanceRequests', 'statusLabel', 'user'));
     }
 
-    public function approvedView($attendance_correct_request_id)
+    public function approveView($attendance_correct_request_id)
     {
         $attendanceRequest = AttendanceCorrectRequest::with('attendance','breakTimeRequests')->find($attendance_correct_request_id);
         $attendance = $attendanceRequest->attendance;
@@ -145,7 +146,7 @@ class RequestController extends Controller
         return view('admin.approved', compact('attendance', 'breakTimeRequests', 'user', 'attendanceRequest'));
     }
 
-    public function approved($attendance_correct_request_id, Request $request)
+    public function approve($attendance_correct_request_id)
     {
         $attendanceRequest = AttendanceCorrectRequest::with('attendance','breakTimeRequests')->find($attendance_correct_request_id);
         $breakTimeRequest1 = $attendanceRequest->breakTimeRequests->first();
