@@ -30,7 +30,6 @@ class AttendanceController extends Controller
         $date = Carbon::now()->format('Y-m-d');
         $statusLabel = $this->getTodayStatusLabel();
 
-        // dd($status);
         return view('attendance', compact('now', 'today', 'statusLabel', 'date'));
     }
 
@@ -87,11 +86,11 @@ class AttendanceController extends Controller
         return redirect()->route('attendance.view');
     }
 
-    public function listView(Request $request)
+    public function listView()
     {
         $statusLabel = $this->getTodayStatusLabel();
 
-        $month = $request->input('month', now()->format('Y-m'));
+        $month = request()->query('month', now()->format('Y-m'));
 
         $carbonMonth = Carbon::createFromFormat('Y-m', $month);
 
@@ -102,7 +101,7 @@ class AttendanceController extends Controller
         $startOfMonth = $carbonMonth->copy()->startOfMonth();
         $endOfMonth = $carbonMonth->copy()->endOfMonth();
 
-        $attendances = $user->attendances()->with('breaktimes')->whereBetWeen('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
+        $attendances = $user->attendances()->with('breakTimes')->whereBetween('date', [$startOfMonth, $endOfMonth])->orderBy('date', 'asc')->get()->keyBy('date');
 
         $dates = CarbonPeriod::create($startOfMonth,    $endOfMonth);
 

@@ -9,7 +9,7 @@
         $break1 = $attendanceRequest->breakTimeRequests->get(0);
         $break2 = $attendanceRequest->breakTimeRequests->get(1);
     @endphp
-    <form class="detail__content" action="/stamp_correction_request/approved/{{ $attendanceRequest->id }}" method="post">
+    <form class="detail__content" action="/stamp_correction_request/approve/{{ $attendanceRequest->id }}" method="post">
         @csrf
         <h1 class="detail__title">勤怠詳細</h1>
         <div class="edit__form">

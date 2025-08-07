@@ -12,7 +12,7 @@
     <div class="list__content">
         <h1 class="list__title">勤怠一覧</h1>
         <div class="month__title">
-            <a class="previous__month" href="{{ route('attendance.list', ['year' => $prevMonth, 'month' => $prevMonth]) }}">
+            <a class="previous__month" href="{{ route('attendance.list', ['month' => $prevMonth]) }}">
                 <img class="left__arrow" src="{{ asset('images/leftArrow.svg') }}" alt="左矢印">
                 <p class="previous__month--text">前月</p>
             </a>
@@ -20,7 +20,7 @@
                 <img class="calendar__image" src="{{ asset('images/calendar.png') }}" alt="カレンダー">
                 <h2 class="current__month--text">{{ $currentMonth }}</h2>
             </div>
-            <a class="next__month" href="{{ route('attendance.list', ['year' => $nextMonth, 'month' => $nextMonth]) }}">
+            <a class="next__month" href="{{ route('attendance.list', ['month' => $nextMonth]) }}">
                 <p class="next__month--text">翌月</p>
                 <img class="right__arrow" src="{{ asset('images/rightArrow.svg') }}" alt="右矢印">
             </a>

@@ -135,7 +135,7 @@ class ApprovedTest extends TestCase
 
         $response->assertSee('詳細');
 
-        $detail = $this->get('/stamp_correction_request/approved/' . $attendanceRequest->id);
+        $detail = $this->get('/stamp_correction_request/approve/' . $attendanceRequest->id);
 
         $detail->assertSee('testuser1');
         $detail->assertSeeInOrder([
@@ -182,7 +182,7 @@ class ApprovedTest extends TestCase
 
         $this->actingAs($admin);
 
-        $this->post('/stamp_correction_request/approved/' . $attendanceRequest->id);
+        $this->post('/stamp_correction_request/approve/' . $attendanceRequest->id);
 
         $this->assertDatabaseHas('attendances', [
             'id' => $attendance->id,
