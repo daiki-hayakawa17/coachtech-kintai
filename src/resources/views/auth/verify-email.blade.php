@@ -24,9 +24,9 @@
             <p>登録していただいたメールアドレスに認証メールを送付しました。</p>
             <p>メール認証を完了してください</p>
         </div>
-        <form  class="verify__button">
-            <button class="verify__button--submit">認証はこちらから</button>
-        </form>
+        <div class="verify__button">
+            <a class="verify__button--submit" href="http://localhost:8025" target="_blank">認証はこちらから</a>
+        </div>
         @if (session('status') == 'verification-link-sent')
             <p>新しい確認メールを送信しました。</p>
         @endif
