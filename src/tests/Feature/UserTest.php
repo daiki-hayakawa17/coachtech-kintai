@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Tests\TestCase;
 use App\Models\User;
@@ -207,5 +208,43 @@ class UserTest extends TestCase
                 return in_array('mail', $channels);
             }
         );
+    }
+
+    public function test_verification_button_redirects_to_mailhog()
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->get('/email/verify');
+
+        $response->assertSee('認証はこちらから');
+        $response->assertSee('<a class="verify__button--submit" href="http://localhost:8025"', false);
+    }
+
+    public function test_email_verification_can_be_completed()
+    {
+        Notification::fake();
+
+        $this->from('/register')->post('/register', [
+            'name' => 'testuser',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $user = User::where('email', 'test@example.com')->first();
+        
+        Notification::assertSentTo($user, VerifyEmail::class, function ($notification) use (&$verificationUrl, $user) {
+            $verificationUrl = $notification->toMail($user)->actionUrl;
+            return true;
+        });
+
+        $this->actingAs($user);
+
+        $verifyResponse = $this->get($verificationUrl);
+        $verifyResponse->assertRedirect('/attendance?verified=1');
+
+        $this->assertNotNull($user->fresh()->email_verified_at);
     }
 }
